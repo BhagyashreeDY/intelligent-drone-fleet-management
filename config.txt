@@ -1,6 +1,9 @@
 # Simulation Configuration File
 WEATHER: Good
 
+# Optimization Weights: Distance, Battery, Priority, Usage
+WEIGHTS: 1.2, 0.8, 2.5, 1.5
+
 # Format: id, type, battery, x, y
 DRONE: 1, Light, 100.0, 0, 0
 DRONE: 2, Heavy, 200.0, 10, 10

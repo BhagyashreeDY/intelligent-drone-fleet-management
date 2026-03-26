@@ -18,6 +18,7 @@ private:
     ConstraintManager cm;
     std::string currentWeather;
     Logger logger;
+    OptimizationWeights weights;
 
 public:
     FleetManager(const std::string& weather = "Good") : currentWeather(weather) {}
@@ -56,6 +57,9 @@ public:
 
             if (category == "WEATHER") {
                 ss >> currentWeather;
+            } else if (category == "WEIGHTS") {
+                char comma;
+                ss >> weights.distance >> comma >> weights.battery >> comma >> weights.priority >> comma >> weights.usage;
             } else if (category == "DRONE") {
                 int id;
                 std::string droneType;
@@ -104,16 +108,32 @@ public:
             return a.getPriority() > b.getPriority(); 
         });
 
-        logger.logMessage("\n--- Processing Cycle (Weather: " + currentWeather + ") ---");
+        logger.logMessage("\n--- Intelligent Decision Cycle (Weather: " + currentWeather + ") ---");
+        std::cout << "[SYSTEM] Optimization-based assignment engine enabled.\n";
         
         std::vector<Drone*> dronePtrs;
         for (const auto& d : drones) dronePtrs.push_back(d.get());
 
         for (auto& delivery : deliveries) {
             if (delivery.getStatus() == DeliveryStatus::Pending) {
-                engine.assignDelivery(dronePtrs, delivery, cm, currentWeather, logger);
+                engine.assignDelivery(dronePtrs, delivery, cm, currentWeather, logger, weights);
             }
         }
+
+        // End of Cycle Summary
+        int successful = 0, failed = 0;
+        for (const auto& del : deliveries) {
+            if (del.getStatus() == DeliveryStatus::Assigned) successful++;
+            else if (del.getStatus() == DeliveryStatus::Rejected) failed++;
+        }
+        int total = successful + failed;
+        double efficiency = total > 0 ? (static_cast<double>(successful) / total) * 100.0 : 0.0;
+
+        std::cout << "\n[SYSTEM SUMMARY]\n";
+        std::cout << "Total Deliveries Processed: " << total << "\n";
+        std::cout << "Successful: " << successful << "\n";
+        std::cout << "Failed: " << failed << "\n";
+        std::cout << "Current Efficiency: " << efficiency << "%\n";
     }
 
     // Generate outcome report for the session

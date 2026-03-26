@@ -10,6 +10,7 @@ protected:
     Location currentLocation;
     bool isAvailable;
     std::string type;
+    int completedDeliveries = 0;
 
     // Abstract method for battery usage per distance unit
     virtual double getConsumptionRate() const = 0;
@@ -24,6 +25,7 @@ public:
     double getBattery() const { return batteryLevel; }
     Location getLocation() const { return currentLocation; }
     bool isStillAvailable() const { return isAvailable; }
+    int getCompletedDeliveries() const { return completedDeliveries; }
 
     // Check if drone battery is below operational threshold
     bool needsRecharge() const { return batteryLevel < 20.0; }
@@ -44,11 +46,13 @@ public:
         isAvailable = true;
         batteryLevel -= (distance * getConsumptionRate());
         currentLocation = newLoc;
+        completedDeliveries++;
     }
 
     virtual void displayStatus() const {
         std::cout << "Drone [" << droneId << "] (" << type << ")"
                   << " | Battery: " << batteryLevel << "%"
+                  << " | Completed: " << completedDeliveries
                   << " | Loc: (" << currentLocation.getX() << "," << currentLocation.getY() << ")\n";
     }
 };

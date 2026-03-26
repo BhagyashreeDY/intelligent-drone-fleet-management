@@ -12,10 +12,14 @@ public:
     
     // Returns failure reason if invalid, otherwise empty string
     virtual std::string validate(const Drone* d, const Delivery& del, const std::string& weather, const std::vector<Location>& noFlyZones) const = 0;
+    
+    // Critical constraints cannot be ignored even in relaxed mode
+    virtual bool isCritical() const = 0;
 };
 
 class BatteryConstraint : public DeliveryConstraint {
 public:
+    bool isCritical() const override { return true; }
     std::string validate(const Drone* d, const Delivery& del, const std::string& weather, const std::vector<Location>& noFlyZones) const override {
         double distToSource = d->getLocation().calculateDistance(del.getSource());
         double distDelivery = del.getSource().calculateDistance(del.getDestination());
@@ -29,6 +33,7 @@ public:
 
 class NoFlyZoneConstraint : public DeliveryConstraint {
 public:
+    bool isCritical() const override { return true; }
     std::string validate(const Drone* d, const Delivery& del, const std::string& weather, const std::vector<Location>& noFlyZones) const override {
         for (const auto& zone : noFlyZones) {
             if (del.getDestination() == zone || del.getSource() == zone) {
@@ -41,6 +46,7 @@ public:
 
 class WeatherConstraint : public DeliveryConstraint {
 public:
+    bool isCritical() const override { return false; }
     std::string validate(const Drone* d, const Delivery& del, const std::string& weather, const std::vector<Location>& noFlyZones) const override {
         // High priority (3) deliveries can bypass weather restrictions
         if (weather == "Bad" && del.getPriority() < 3) {
@@ -66,13 +72,19 @@ public:
         noFlyZones.push_back(loc);
     }
 
-    // Identify all reasons why a drone cannot fulfill a specific delivery
-    std::vector<std::string> getFailureReasons(const Drone* d, const Delivery& del, const std::string& weather) const {
+    // Identify failure reasons, optionally ignoring soft constraints if relaxed is true
+    std::vector<std::string> getFailureReasons(const Drone* d, const Delivery& del, const std::string& weather, bool relaxed = false) const {
         std::vector<std::string> reasons;
         for (const auto& constraint : constraints) {
+            // Skip non-critical constraints if we are in relaxed mode
+            if (relaxed && !constraint->isCritical()) {
+                continue;
+            }
+
             std::string result = constraint->validate(d, del, weather, noFlyZones);
             if (!result.empty()) {
-                reasons.push_back(result);
+                std::string tag = constraint->isCritical() ? "[CRITICAL] " : "[SOFT] ";
+                reasons.push_back(tag + result);
             }
         }
         return reasons;
