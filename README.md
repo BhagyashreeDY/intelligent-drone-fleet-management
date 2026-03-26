@@ -5,10 +5,29 @@
 A constraint aware drone delivery simulation system built using Modern C++ and Object Oriented Programming principles.
 The system focuses on intelligent task allocation using optimization techniques and real world operational constraints.
 
+<<<<<<< HEAD
 ---
+=======
+*   **Optimization-Driven Assignment:** Matches deliveries against multiple constraints using weighted decision scoring for highest efficiency.
+*   **Adaptive Constraint Relaxation:** Two-pass logic reconsidering rejected deliveries when soft constraints (weather) can be safely bypassed.
+*   **Polymorphic Fleet:** Supports multiple drone types (`LightDrone`, `HeavyDrone`) with unique energy consumption profiles.
+*   **Dynamic Simulation:** Features a multi-cycle loop demonstrating adaptation to shifting environmental conditions.
+*   **Config-Driven Architecture:** Decoupled from hardcoded data; fleet settings and optimization weights are loaded from external configuration.
+
+## 📦 Project Structure
+
+```text
+├── src/                    # Source code and header files
+├── config/                 # External system configuration
+├── docs/                   # Architectural documentation
+├── README.md               # Project overview
+└── .gitignore              # Git ignore rules
+```
+>>>>>>> 6af3b99 (Refactored project structure into src, config, and docs directories)
 
 ## Problem Statement
 
+<<<<<<< HEAD
 Drone delivery systems face several practical challenges:
 
 * Limited battery capacity
@@ -110,11 +129,29 @@ intelligent-drone-fleet-management/
 
 ```bash
 g++ main.cpp -o drone_system
+=======
+*   **Language:** C++ (using C++14/17 features)
+*   **Core Concepts:** Inheritance, Polymorphism, Strategy Pattern, SOLID Principles, Smart Pointers.
+*   **Build Tool:** GCC/g++
+
+## ⚙️ Compilation & Execution
+
+To compile the system from the project root:
+
+```bash
+g++ src/main.cpp -I src -o drone_system
+```
+
+To run the simulation:
+
+```bash
+>>>>>>> 6af3b99 (Refactored project structure into src, config, and docs directories)
 ./drone_system
 ```
 
 ---
 
+<<<<<<< HEAD
 ## Sample Output
 
 ```
@@ -151,3 +188,6 @@ Efficiency: 66.6%
 ## Creator
 
 Bhagyashree Yadagiri
+=======
+For a detailed breakdown of the architectural decisions and patterns used in this project, please refer to [docs/DESIGN.md](./docs/DESIGN.md).
+>>>>>>> 6af3b99 (Refactored project structure into src, config, and docs directories)

@@ -6,7 +6,9 @@ int main() {
     
     // System setup
     FleetManager fleet;
-    fleet.loadConfig("config.txt");
+    
+    // Load config from the new directory structure
+    fleet.loadConfig("config/config.txt");
 
     const int totalCycles = 3;
     for (int cycle = 1; cycle <= totalCycles; ++cycle) {

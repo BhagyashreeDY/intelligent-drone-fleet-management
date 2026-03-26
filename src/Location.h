@@ -7,18 +7,18 @@ private:
     double y;
 
 public:
-    Location(double x = 0, double y = 0) : x(x), y(y) {}
-    
+    Location(double x_coord = 0, double y_coord = 0) : x(x_coord), y(y_coord) {}
+
     double getX() const { return x; }
     double getY() const { return y; }
-    
-    // Euclidean distance calculation between two points
+
+    // Euclidean distance between two coordinate points
     double calculateDistance(const Location& other) const {
         return std::sqrt(std::pow(x - other.x, 2) + std::pow(y - other.y, 2));
     }
-    
-    // Check if two locations are identical
+
+    // Comparison for exact location matches
     bool operator==(const Location& other) const {
-        return x == other.x && y == other.y;
+        return (x == other.x && y == other.y);
     }
 };
