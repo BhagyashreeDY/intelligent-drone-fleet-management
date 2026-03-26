@@ -2,8 +2,8 @@
 
 ## Overview
 
-A constraint-aware drone delivery simulation system built using Modern C++ and Object-Oriented Programming principles.
-The system focuses on intelligent task allocation using optimization techniques and real-world operational constraints.
+A constraint aware drone delivery simulation system built using Modern C++ and Object Oriented Programming principles.
+The system focuses on intelligent task allocation using optimization techniques and real world operational constraints.
 
 ---
 
@@ -12,8 +12,8 @@ The system focuses on intelligent task allocation using optimization techniques 
 Drone delivery systems face several practical challenges:
 
 * Limited battery capacity
-* Restricted no-fly zones
-* Weather-dependent operations
+* Restricted no fly zones
+* Weather dependent operations
 * Inefficient static assignment strategies
 
 Many basic implementations rely on selecting the nearest available drone and ignore these constraints, resulting in unrealistic and inefficient systems.
@@ -24,8 +24,8 @@ Many basic implementations rely on selecting the nearest available drone and ign
 
 This project models the decision-making layer of a drone delivery system by introducing:
 
-* Constraint-based validation (battery, weather, restricted zones)
-* Optimization-driven drone selection using weighted scoring
+* Constraint based validation (battery, weather, restricted zones)
+* Optimization driven drone selection using weighted scoring
 * Adaptive constraint handling with retry mechanisms
 * Transparent decision logic through score breakdown and logs
 * Performance tracking across simulation cycles
@@ -34,37 +34,37 @@ This project models the decision-making layer of a drone delivery system by intr
 
 ## Project Highlights
 
-Most drone delivery simulations use simple heuristics such as nearest-drone assignment and do not account for real-world constraints.
+Most drone delivery simulations use simple heuristics such as nearest drone assignment and do not account for real world constraints.
 
 This system improves upon those approaches by:
 
-* Introducing a constraint-aware decision system
-* Using an optimization-based scoring mechanism for better selection
+* Introducing a constraint aware decision system
+* Using an optimization based scoring mechanism for better selection
 * Supporting adaptive constraint relaxation to improve delivery success
 * Providing explainable decision outputs through structured logs
 
 The project focuses on modeling the decision layer of real-world systems, which is a key component in practical implementations.
-While hardware-level complexities are not included, the system is designed to be extensible for future integration.
+While hardware level complexities are not included, the system is designed to be extensible for future integration.
 
 ---
 
 ## Key Features
 
 * Drone fleet management
-* Priority-based delivery scheduling
-* Constraint evaluation (battery, weather, no-fly zones)
+* Priority based delivery scheduling
+* Constraint evaluation (battery, weather, no fly zones)
 * Weighted scoring for drone selection
 * Adaptive constraint handling
 * Detailed decision logs and rejection reasoning
 * System performance metrics (efficiency tracking)
-* Configuration-driven setup (`config.txt`)
-* Multi-cycle simulation
+* Configuration driven setup (`config.txt`)
+* Multi cycle simulation
 
 ---
 
 ## System Design
 
-* Object-Oriented Design (Encapsulation, Inheritance, Polymorphism)
+* Object Oriented Design (Encapsulation, Inheritance, Polymorphism)
 * Strategy Pattern for constraint handling
 * Modular architecture separating logic and control flow
 
@@ -141,9 +141,9 @@ Efficiency: 66.6%
 
 ## Future Enhancements
 
-* Integration with real-time weather data
+* Integration with real time weather data
 * Advanced route optimization
-* Obstacle-aware path planning
+* Obstacle aware path planning
 * Distributed fleet coordination
 
 ---
