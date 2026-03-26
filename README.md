@@ -1,46 +1,153 @@
 # Intelligent Drone Fleet Management System
 
-A C++ simulation of an autonomous drone delivery fleet that optimizes task assignment based on complex operational constraints. This project demonstrates advanced Object-Oriented Programming (OOP) principles, modern C++ memory management, and clean code architecture.
+## Overview
 
-## 🚀 Key Features
+A constraint-aware drone delivery simulation system built using Modern C++ and Object-Oriented Programming principles.
+The system focuses on intelligent task allocation using optimization techniques and real-world operational constraints.
 
-*   **Constraint-Based Assignment:** Deliveries are matched against multiple constraints (Battery levels, No-Fly Zones, Weather) using an extensible interface-based design.
-*   **Polymorphic Fleet:** Supports multiple drone types (`LightDrone`, `HeavyDrone`) with unique energy consumption profiles.
-*   **Dynamic Simulation:** Features a multi-cycle simulation loop that demonstrates the fleet's adaptation to environmental changes (e.g., storm conditions).
-*   **Config-Driven:** Entirely decoupled from hardcoded data. Drones, deliveries, and system settings are loaded from external `config.txt` files.
-*   **Robust Logging:** Detailed telemetry for every assigned or rejected delivery, providing transparency into the system's decision-making process.
+---
 
-## 🛠️ Technical Stack
+## Problem Statement
 
-*   **Language:** C++ (using C++14/17 features)
-*   **Concepts:** Inheritance, Polymorphism, Strategy Pattern, SOLID Principles, Smart Pointers.
-*   **Build Tool:** GCC/g++
+Drone delivery systems face several practical challenges:
 
-## 📦 Project Structure
+* Limited battery capacity
+* Restricted no-fly zones
+* Weather-dependent operations
+* Inefficient static assignment strategies
 
-*   `main.cpp`: Entry point and simulation orchestration.
-*   `FleetManager.h`: High-level management of drones and delivery queues.
-*   `Drone.h`: Polymorphic base class and specialized drone implementations.
-*   `Delivery.h`: Data model and lifecycle management for package deliveries.
-*   `AssignmentEngine.h`: Logic for matching pending requests to optimal drone candidates.
-*   `ConstraintManager.h`: Extensible verification system for site-specific rules.
-*   `Location.h`: Utility for 2D coordinate geometry and distance calculations.
-*   `Logger.h`: Centralized reporting and telemetry.
+Many basic implementations rely on selecting the nearest available drone and ignore these constraints, resulting in unrealistic and inefficient systems.
 
-## ⚙️ Compilation & Execution
+---
 
-To compile the system using `g++`:
+## Solution Approach
+
+This project models the decision-making layer of a drone delivery system by introducing:
+
+* Constraint-based validation (battery, weather, restricted zones)
+* Optimization-driven drone selection using weighted scoring
+* Adaptive constraint handling with retry mechanisms
+* Transparent decision logic through score breakdown and logs
+* Performance tracking across simulation cycles
+
+---
+
+## Project Highlights
+
+Most drone delivery simulations use simple heuristics such as nearest-drone assignment and do not account for real-world constraints.
+
+This system improves upon those approaches by:
+
+* Introducing a constraint-aware decision system
+* Using an optimization-based scoring mechanism for better selection
+* Supporting adaptive constraint relaxation to improve delivery success
+* Providing explainable decision outputs through structured logs
+
+The project focuses on modeling the decision layer of real-world systems, which is a key component in practical implementations.
+While hardware-level complexities are not included, the system is designed to be extensible for future integration.
+
+---
+
+## Key Features
+
+* Drone fleet management
+* Priority-based delivery scheduling
+* Constraint evaluation (battery, weather, no-fly zones)
+* Weighted scoring for drone selection
+* Adaptive constraint handling
+* Detailed decision logs and rejection reasoning
+* System performance metrics (efficiency tracking)
+* Configuration-driven setup (`config.txt`)
+* Multi-cycle simulation
+
+---
+
+## System Design
+
+* Object-Oriented Design (Encapsulation, Inheritance, Polymorphism)
+* Strategy Pattern for constraint handling
+* Modular architecture separating logic and control flow
+
+---
+
+## Optimization Model
+
+The system selects drones using a weighted scoring approach:
+
+Score = (distance_weight × distance)
+- (battery_weight × battery)
+- (priority_weight × priority)
++ (usage_weight × utilization)
+
+Lower score indicates a better candidate.
+
+Weights are configurable through the configuration file.
+
+---
+
+## Project Structure
+
+```
+intelligent-drone-fleet-management/
+│
+├── main.cpp
+├── Drone.h
+├── Delivery.h
+├── Location.h
+├── AssignmentEngine.h
+├── ConstraintManager.h
+├── FleetManager.h
+├── Logger.h
+│
+├── config.txt
+├── DESIGN.md
+└── README.md
+```
+
+---
+
+## How to Run
 
 ```bash
 g++ main.cpp -o drone_system
-```
-
-To run the simulation:
-
-```bash
 ./drone_system
 ```
 
-## 📝 Design Patterns
+---
 
-For a detailed breakdown of the architectural decisions and patterns used in this project, please refer to [DESIGN.md](./DESIGN.md).
+## Sample Output
+
+```
+[SYSTEM CHECK] Validating drone safety constraints...
+
+[INTEL] Score Breakdown for Drone 2:
+  - Distance Component: 12.5
+  - Battery Component : -80.0
+  - Priority Component: -7.5
+  - Usage Penalty     : +1.5
+  - Final Score       : -73.5
+
+Assigned to Drone 2
+Estimated Delivery Time: 8.3 units
+
+[SYSTEM SUMMARY]
+Total Deliveries Processed: 6
+Successful: 4
+Failed: 2
+Efficiency: 66.6%
+```
+
+---
+
+## Future Enhancements
+
+* Integration with real-time weather data
+* Advanced route optimization
+* Obstacle-aware path planning
+* Distributed fleet coordination
+
+---
+
+## Creator
+
+Bhagyashree Yadagiri
